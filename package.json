@@ -1,0 +1,8 @@
+{
+  "name": "quark",
+  "version": "1.0.0",
+  "dependencies": {
+    "nodejs-websocket": "^1.7.2",
+    "sqlite3":"^4.1.1"
+  }
+}
