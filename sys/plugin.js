@@ -6,12 +6,13 @@
 //****************************
 var sqlite3 = require("sqlite3");
 var fs = require("fs");
-var db = new sqlite3.Database("database.db");
-if (fs.existsSync(file)) {
+var file = "database.db";
+if (!fs.existsSync(file)) {
   console.log("[Plugins info]Creating db file!");
   fs.openSync(file, "w");
 }
+var db = new sqlite3.Database(file);
 function getTheResult(str) {
   console.log("[Plugin info] get Result:" + str);
+  //callback("say hello", "");
 }
-
