@@ -2,7 +2,7 @@
 
 [Chinese](README.md)
 
-This is a websocket server for Minecraft Bedrock Edition.You can use the API from the Quark.
+Quark is a websocket server for Minecraft Bedrock Edition.You can use the API from the Quark.
 
 ## Install
 
