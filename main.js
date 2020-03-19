@@ -5,8 +5,8 @@
 //*违者必究                   *
 //****************************
 var ws = require("nodejs-websocket");
-var plugins = require("plugin.js");
-var app = require("sys/app.js");
+var plugins = require("./plugin");
+var app = require("./sys/app.js");
 var server = ws
   .createServer(function(conn) {
     conn.on("text", function(str) {
