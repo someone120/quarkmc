@@ -1,3 +1,9 @@
+//****************************
+//*DATE: 2020 - 03 - 19      *
+//*AUTHOR:someone120         *
+//*遵守GPLv3协议              *
+//*违者必究                   *
+//****************************
 function getByComm(comm, uuid) {
   return (
     '{"body": {"origin": {"type": "player"},"commandLine":' +
