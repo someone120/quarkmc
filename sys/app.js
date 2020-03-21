@@ -4,30 +4,31 @@
 //*遵守GPLv3协议              *
 //*违者必究                   *
 //****************************
-function getByComm(comm, uuid) {
+
+exports.getByComm = function (comm, uuid) {
   return (
-    '{"body": {"origin": {"type": "player"},"commandLine":' +
+    '{"body": {"origin": {"type": "player"},"commandLine":"' +
     comm +
-    ',"version": 1},"header": {"requestId":' +
+    '","version": 1},"header": {"requestId":"' +
     uuid +
-    ',"messagePurpose": "commandRequest","version": 1,"messageType": "commandRequest"}}'
+    '","messagePurpose": "commandRequest","version": 1,"messageType": "commandRequest"}}'
   );
 }
-function getBysubscribe(eventName, uuid) {
+exports.getBysubscribe = function (eventName, uuid) {
   return (
-    '{"body": {"eventName": ' +
+    '{"body": {"eventName": "' +
     eventName +
-    '},"header": {"requestId":' +
+    '"},"header": {"requestId":"' +
     uuid +
-    ',"messagePurpose": "subscribe","version": 1,"messageType": "commandRequest"}}'
+    '","messagePurpose": "subscribe","version": 1,"messageType": "commandRequest"}}'
   );
 }
-function getByunsubscribe(eventName, uuid) {
+exports.getByunsubscribe = function (eventName, uuid) {
   return (
-    '{"body": {"eventName": ' +
+    '{"body": {"eventName": "' +
     eventName +
-    '},"header": {"requestId":' +
+    '"},"header": {"requestId":"' +
     uuid +
-    ',"messagePurpose": "unsubscribe","version": 1,"messageType": "commandRequest"}}'
+    '","messagePurpose": "unsubscribe","version": 1,"messageType": "commandRequest"}}'
   );
 }

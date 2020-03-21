@@ -12,7 +12,13 @@ if (!fs.existsSync(file)) {
   fs.openSync(file, "w");
 }
 var db = new sqlite3.Database(file);
-function getTheResult(str) {
+
+exports.getTheResult = function (str, conn) {
   console.log("[Plugin info] get Result:" + str);
+  str = str.split(" ");
+  db.all("select path,common from plugin where common=" + str[0], function (err, row) {
+    console.log(JSON.stringify(row));
+  });
   //callback("say hello", "");
 }
+
