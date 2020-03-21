@@ -6,29 +6,29 @@
 //****************************
 
 exports.getByComm = function (comm, uuid) {
-  return (
-    '{"body": {"origin": {"type": "player"},"commandLine":"' +
-    comm +
-    '","version": 1},"header": {"requestId":"' +
-    uuid +
-    '","messagePurpose": "commandRequest","version": 1,"messageType": "commandRequest"}}'
-  );
-}
+    return (
+        '{"body": {"origin": {"type": "player"},"commandLine":"' +
+        comm +
+        '","version": 1},"header": {"requestId":"' +
+        uuid +
+        '","messagePurpose": "commandRequest","version": 1,"messageType": "commandRequest"}}'
+    );
+};
 exports.getBysubscribe = function (eventName, uuid) {
-  return (
-    '{"body": {"eventName": "' +
-    eventName +
-    '"},"header": {"requestId":"' +
-    uuid +
-    '","messagePurpose": "subscribe","version": 1,"messageType": "commandRequest"}}'
-  );
-}
+    return (
+        '{"body": {"eventName": "' +
+        eventName +
+        '"},"header": {"requestId":"' +
+        uuid +
+        '","messagePurpose": "subscribe","version": 1,"messageType": "commandRequest"}}'
+    );
+};
 exports.getByunsubscribe = function (eventName, uuid) {
-  return (
-    '{"body": {"eventName": "' +
-    eventName +
-    '"},"header": {"requestId":"' +
-    uuid +
-    '","messagePurpose": "unsubscribe","version": 1,"messageType": "commandRequest"}}'
-  );
-}
+    return (
+        '{"body": {"eventName": "' +
+        eventName +
+        '"},"header": {"requestId":"' +
+        uuid +
+        '","messagePurpose": "unsubscribe","version": 1,"messageType": "commandRequest"}}'
+    );
+};
