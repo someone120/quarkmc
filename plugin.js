@@ -25,7 +25,6 @@ exports.getTheResult = function (str, conn) {
     db.all("select NAME,COMMON from PLUGINS where COMMON='" + str[0] + "' OR COMMON=NULL;", function (err, row) {
         //读有什么导入的命令和插件
         console.log(JSON.stringify(row));
-
     });
     //callback("say hello", "");
 };
@@ -50,8 +49,7 @@ console.log(__dirname);
 if (arguments[1] == __dirname + "/plugin.js") {
     //判断是否直接调用
     if (arguments[2] == "install") {
-        if (arguments[3] != undefined) {
-            //防止憨批
+        if (arguments[3] != undefined) {//防止憨批
             install(arguments[3])
         }
     }
