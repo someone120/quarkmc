@@ -24,7 +24,7 @@ exports.getTheResult = function (str, conn) {
     if (JSON.parse(str)["header"]["messagePurpose"] == "event") {
         str = JSON.parse(str)["body"]["properties"]["Message"];
         str = str.split(" ");
-        db.all("select NAME,COMMON from PLUGINS where COMMON='" + str[0] ";", function (err, row) {
+        db.all("select NAME,COMMON from PLUGINS where COMMON='" + str[0] + ";", function (err, row) {
             //读有什么导入的命令和插件
             console.log(JSON.stringify(row));
             if (row[0] != undefined) {
