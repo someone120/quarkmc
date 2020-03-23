@@ -21,19 +21,23 @@ function copyFile(src, dist) {
 //初始化完毕
 exports.getTheResult = function (str, conn) {
     console.log("[Plugin info] get Result:" + str);
+    if (JSON.parse(str)["header"]["messagePurpose"] == "event") {
+        str = JSON.parse(str)["body"]["properties"]["Message"];
+        str = str.split(" ");
+        db.all("select NAME,COMMON from PLUGINS where COMMON='" + str[0] + "' OR COMMON=NULL;", function (err, row) {
+            //读有什么导入的命令和插件
+            console.log(JSON.stringify(row));
+            if (row[0] != undefined) {
+                var plugin = require("./plugins/" + row[0]["NAME"]);
+                let result = plugin.getForComm(str);
+                console.log(result);
 
-    str = str.split(" ");
-    db.all("select NAME,COMMON from PLUGINS where COMMON='" + str[0] + "' OR COMMON=NULL;", function (err, row) {
-        //读有什么导入的命令和插件
-        console.log(JSON.stringify(row));
-        if (row[0]["NAME"] == undefined) {
-            var plugin = require("./plugins/" + row[0]["NAME"]);
-            let result = plugin.getForComm(str);
-            conn.send(JSON.stringify(result))
-            return result;
-        }
-    });
-    //callback("say hello", "");
+                conn.send(result)
+                return result;
+            }
+        });
+        //callback("say hello", "");
+    }
 };
 //下为install操作
 var arguments = process.argv; //获取参数
