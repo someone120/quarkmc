@@ -28,8 +28,8 @@ exports.getTheResult = function (str, conn) {
             //读有什么导入的命令和插件
             console.log(JSON.stringify(row));
             if (row[0] != undefined) {
-                var plugin = require("./plugins/" + row[0]["NAME"]);
-                let result = plugin.getForComm(str);
+                let plugin = require("./plugins/" + row[0]["NAME"]);
+                let result = plugin.getForChat(str);
                 console.log(result);
 
                 conn.send(result)
@@ -44,7 +44,7 @@ var arguments = process.argv; //获取参数
 function install(path) {
     console.log("test");
     var plugin = require(path); //导入文件
-    var commons = plugin.getComm(); //获取可执行的命令
+    var commons = plugin.getAllComm() //获取可执行的命令
     copyFile(path, "./plugins/" + path); //复制到plugins文件夹
     var name = path.split("/")[path.split("/").length - 1]
     var sql = "INSERT INTO 'PLUGINS' SELECT '" + name + "' AS 'COMMON','" + commons[0] + "' AS 'NAME'"
