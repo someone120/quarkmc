@@ -13,9 +13,11 @@ exports.getForChat = function(str) {
     return app.getByComm("say a", "00000001-0000-0000-0000-000000000000");
 };
 exports.getForChat = function(str, name, conn) {
-    let reg = /b\s-?\d+\s\d+\s-?\d+\s-?\d+\s\d+\s-?\d+/;
+    let reg_b = /b\s-?\d+\s\d+\s-?\d+\s-?\d+\s\d+\s-?\d+/;
+    let reg_c = /c .+/;
     console.log(str);
-    let b = reg.test(str);
+    let b = reg_b.test(str);
+    let c = reg_c.test(str);
     //app.fast_send("say " + reg.test(str), conn);
     app.fast_send("say '" + str + "'", conn);
     if (str == "a") {
@@ -41,40 +43,38 @@ exports.getForChat = function(str, name, conn) {
                 }
             }
         }
-    } else {
-        if (b) {
-            console.log("b");
+    } else if (b) {
+        console.log("b");
 
-            str = str.split(" ");
-            app.fast_send("say " + JSON.stringify(str), conn);
-            let sl = app.sleep(10);
-            let number =
-                (str[4] - str[1]) * (str[5] - str[2]) * (str[6] - str[3]);
-            let i = 0;
-            for (let x = str[1]; x < str[4]; x++) {
-                for (let y = str[2]; y < str[5]; y++) {
-                    for (let z = str[3]; z < str[6]; z++) {
-                        sl = sl.then(() => {
-                            i++;
-                            app.fast_send(
-                                "setblock " + x + " " + y + " " + z + " stone",
-                                conn
-                            );
-                            app.fast_send(
-                                "title " +
-                                    name +
-                                    " actionbar 正在填充...[" +
-                                    i +
-                                    "/" +
-                                    number +
-                                    "]",
-                                conn
-                            );
-                            return app.sleep(10);
-                        });
-                    }
+        str = str.split(" ");
+        app.fast_send("say " + JSON.stringify(str), conn);
+        let sl = app.sleep(10);
+        let number = (str[4] - str[1]) * (str[5] - str[2]) * (str[6] - str[3]);
+        let i = 0;
+        for (let x = str[1]; x < str[4]; x++) {
+            for (let y = str[2]; y < str[5]; y++) {
+                for (let z = str[3]; z < str[6]; z++) {
+                    sl = sl.then(() => {
+                        i++;
+                        app.fast_send(
+                            "setblock " + x + " " + y + " " + z + " stone",
+                            conn
+                        );
+                        app.fast_send(
+                            "title " +
+                                name +
+                                " actionbar 正在填充...[" +
+                                i +
+                                "/" +
+                                number +
+                                "]",
+                            conn
+                        );
+                        return app.sleep(10);
+                    });
                 }
             }
         }
+    } else if (c) {
     }
 };
