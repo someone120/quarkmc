@@ -12,7 +12,7 @@ var db = new sqlite3.Database(file);
 if (!fs.existsSync(file)) {
     console.log("[Plugins info]Creating db file!");
     fs.openSync(file, "w");
-    db.run("CREATE TABLE PLUGINS(" + "NAME  CHAR(32) NOT NULL," + "COMMON  CHAR(128));")
+    db.run("CREATE TABLE PLUGINS(" + "COMMON  CHAR(128)," + "NAME  CHAR(32) NOT NULL);")
 }
 
 function copyFile(src, dist) {
@@ -23,17 +23,13 @@ exports.getTheResult = function (str, conn) {
     console.log("[Plugin info] get Result:" + str);
     if (JSON.parse(str)["header"]["messagePurpose"] == "event") {
         str = JSON.parse(str)["body"]["properties"]["Message"];
-        str = str.split(" ");
-        db.all("select NAME,COMMON from PLUGINS where COMMON='" + str[0] + ";", function (err, row) {
+        db.all("select NAME,COMMON from PLUGINS where COMMON LIKE '" + str + "%';", function (err, row) {
             //读有什么导入的命令和插件
             console.log(JSON.stringify(row));
             if (row[0] != undefined) {
                 let plugin = require("./plugins/" + row[0]["NAME"]);
-                let result = plugin.getForChat(str);
+                let result = plugin.getForChat(str, conn);
                 console.log(result);
-
-                conn.send(result)
-                return result;
             }
         });
         //callback("say hello", "");
@@ -47,9 +43,9 @@ function install(path) {
     var commons = plugin.getAllComm() //获取可执行的命令
     copyFile(path, "./plugins/" + path); //复制到plugins文件夹
     var name = path.split("/")[path.split("/").length - 1]
-    var sql = "INSERT INTO 'PLUGINS' SELECT '" + name + "' AS 'COMMON','" + commons[0] + "' AS 'NAME'"
+    var sql = "INSERT INTO 'PLUGINS' SELECT '" + commons[0] + "' AS 'COMMON','" + name + "' AS 'NAME'"
     for (i = 1; i < commons.length; i++) {
-        sql += "UNION SELECT '" + name + "','" + commons[i] + "'"
+        sql += "UNION SELECT '" + commons[i] + "','" + name + "'"
     }
     sql += ";"
     var sql1 = db.prepare(sql);

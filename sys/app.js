@@ -5,7 +5,7 @@
 //*违者必究                   *
 //****************************
 
-exports.getByComm = function (comm, uuid) {
+exports.getByComm = function(comm, uuid) {
     return (
         '{"body": {"origin": {"type": "player"},"commandLine":"' +
         comm +
@@ -14,7 +14,7 @@ exports.getByComm = function (comm, uuid) {
         '","messagePurpose": "commandRequest","version": 1,"messageType": "commandRequest"}}'
     );
 };
-exports.getBysubscribe = function (eventName, uuid) {
+exports.getBysubscribe = function(eventName, uuid) {
     return (
         '{"body": {"eventName": "' +
         eventName +
@@ -23,7 +23,7 @@ exports.getBysubscribe = function (eventName, uuid) {
         '","messagePurpose": "subscribe","version": 1,"messageType": "commandRequest"}}'
     );
 };
-exports.getByunsubscribe = function (eventName, uuid) {
+exports.getByunsubscribe = function(eventName, uuid) {
     return (
         '{"body": {"eventName": "' +
         eventName +
@@ -31,4 +31,12 @@ exports.getByunsubscribe = function (eventName, uuid) {
         uuid +
         '","messagePurpose": "unsubscribe","version": 1,"messageType": "commandRequest"}}'
     );
+};
+exports.sleep = function(time = 0) {
+    //延时参数，看下面的用法
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve();
+        }, time);
+    });
 };
