@@ -31,7 +31,7 @@ exports.getTheResult = function(str, conn) {
             "select NAME,COMMON from PLUGINS where COMMON LIKE '" + str + "%';",
             function(err, row) {
                 //读有什么导入的命令和插件
-                console.log(JSON.stringify(row));
+                //                console.log(JSON.stringify(row));
                 if (row[0] != undefined) {
                     let plugin = require("./plugins/" + row[0]["NAME"]);
                     let result = plugin.getForChat(str, conn);
@@ -45,7 +45,7 @@ exports.getTheResult = function(str, conn) {
 //下为install操作
 var arguments = process.argv; //获取参数
 function install(path) {
-    console.log("test");
+    //    console.log("test");
     var plugin = require("./" + path); //导入文件
     var commons = plugin.getAllComm(); //获取可执行的命令
     copyFile(path, "./plugins/" + path); //复制到plugins文件夹
