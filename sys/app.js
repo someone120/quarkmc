@@ -41,19 +41,30 @@ function sleep(time = 0) {
         }, time);
     });
 }
-exports.getByComm = getByComm;
-exports.getBysubscribe = getBysubscribe;
-exports.getByunsubscribe = getByunsubscribe;
-exports.sleep = sleep;
-exports.send = function(comm, conn, callback) {
+function fast_send(comm, conn) {
+    let uuid = v1.v1();
+    console.log(uuid);
+    conn.send(getByComm(comm, uuid));
+}
+function send(comm, conn, callback) {
     let uuid = v1.v1();
     conn.send(getByComm(comm, uuid));
     global.callback = callback;
     global.uuid = uuid;
-};
+}
+exports.getByComm = getByComm;
+exports.getBysubscribe = getBysubscribe;
+exports.getByunsubscribe = getByunsubscribe;
+exports.sleep = sleep;
+exports.send = send;
 
-exports.fast_send = function(comm, conn) {
-    let uuid = v1.v1();
-    console.log(uuid);
-    conn.send(getByComm(comm, uuid));
+exports.fast_send = fast_send;
+exports.say = function(str, conn) {
+    fast_send("say " + str, conn);
+};
+exports.setblock = function(x, y, z, block, data = 0) {
+    fast_send(
+        "setblock " + x + " " + y + " " + z + " " + block + " " + data,
+        conn
+    );
 };
