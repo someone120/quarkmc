@@ -4,8 +4,9 @@
 //*遵守GPLv3协议              *
 //*违者必究                   *
 //****************************
-
-exports.getByComm = function(comm, uuid) {
+var v1 = require("uuid");
+console.log(v1.v1());
+function getByComm(comm, uuid) {
     return (
         '{"body": {"origin": {"type": "player"},"commandLine":"' +
         comm +
@@ -13,8 +14,8 @@ exports.getByComm = function(comm, uuid) {
         uuid +
         '","messagePurpose": "commandRequest","version": 1,"messageType": "commandRequest"}}'
     );
-};
-exports.getBysubscribe = function(eventName, uuid) {
+}
+function getBysubscribe(eventName, uuid) {
     return (
         '{"body": {"eventName": "' +
         eventName +
@@ -22,8 +23,8 @@ exports.getBysubscribe = function(eventName, uuid) {
         uuid +
         '","messagePurpose": "subscribe","version": 1,"messageType": "commandRequest"}}'
     );
-};
-exports.getByunsubscribe = function(eventName, uuid) {
+}
+function getByunsubscribe(eventName, uuid) {
     return (
         '{"body": {"eventName": "' +
         eventName +
@@ -31,12 +32,28 @@ exports.getByunsubscribe = function(eventName, uuid) {
         uuid +
         '","messagePurpose": "unsubscribe","version": 1,"messageType": "commandRequest"}}'
     );
-};
-exports.sleep = function(time = 0) {
+}
+function sleep(time = 0) {
     //延时参数，看下面的用法
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve();
         }, time);
     });
+}
+exports.getByComm = getByComm;
+exports.getBysubscribe = getBysubscribe;
+exports.getByunsubscribe = getByunsubscribe;
+exports.sleep = sleep;
+exports.send = function(comm, conn, callback) {
+    let uuid = v1.v1();
+    conn.send(getByComm(comm, uuid));
+    global.callback = callback;
+    global.uuid = uuid;
+};
+
+exports.fast_send = function(comm, conn) {
+    let uuid = v1.v1();
+    console.log(uuid);
+    conn.send(getByComm(comm, uuid));
 };

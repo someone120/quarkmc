@@ -28,7 +28,9 @@ exports.getTheResult = function(str, conn) {
     if (JSON.parse(str)["header"]["messagePurpose"] == "event") {
         str = JSON.parse(str)["body"]["properties"]["Message"];
         db.all(
-            "select NAME,COMMON from PLUGINS where COMMON LIKE '" + str + "%';",
+            "select NAME,COMMON from PLUGINS where COMMON LIKE '" +
+                str.split(" ")[0] +
+                "';",
             function(err, row) {
                 //读有什么导入的命令和插件
                 console.log(JSON.stringify(row));
@@ -40,6 +42,11 @@ exports.getTheResult = function(str, conn) {
             }
         );
         //callback("say hello", "");
+    }
+    if (global.uuid != undefined) {
+        if (JSON.parse(str)["header"]["requestId"]) {
+            global.callback(str);
+        }
     }
 };
 //下为install操作
