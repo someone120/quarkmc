@@ -26,20 +26,31 @@ function copyFile(src, dist) {
 exports.getTheResult = function(str, conn) {
     console.log("[Plugin info] get Result:" + str);
     if (JSON.parse(str)["header"]["messagePurpose"] == "event") {
-        str = JSON.parse(str)["body"]["properties"]["Message"];
+        str1 = JSON.parse(str)["body"]["properties"]["Message"];
         db.all(
-            "select NAME,COMMON from PLUGINS where COMMON LIKE '" + str + "%';",
+            "select NAME,COMMON from PLUGINS where COMMON LIKE '" +
+                str1.split(" ")[0] +
+                "';",
             function(err, row) {
                 //读有什么导入的命令和插件
                 //                console.log(JSON.stringify(row));
                 if (row[0] != undefined) {
                     let plugin = require("./plugins/" + row[0]["NAME"]);
-                    let result = plugin.getForChat(str, conn);
+                    let result = plugin.getForChat(
+                        str1,
+                        JSON.parse(str)["body"]["properties"]["Sender"],
+                        conn
+                    );
                     console.log(result);
                 }
             }
         );
         //callback("say hello", "");
+    }
+    if (global.uuid != undefined) {
+        if (JSON.parse(str)["header"]["requestId"]) {
+            global.callback(str);
+        }
     }
 };
 //下为install操作

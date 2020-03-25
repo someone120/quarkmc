@@ -12,9 +12,16 @@ exports.getForChat = function(str) {
     console.log(str);
     return app.getByComm("say a", "00000001-0000-0000-0000-000000000000");
 };
-exports.getForChat = function(str, conn) {
+exports.getForChat = function(str, name, conn) {
+    let reg = /b\s-?\d+\s\d+\s-?\d+\s-?\d+\s\d+\s-?\d+/;
+    console.log(str);
+    let b = reg.test(str);
+    //app.fast_send("say " + reg.test(str), conn);
+    app.fast_send("say '" + str + "'", conn);
     if (str == "a") {
         //当命令为a时
+        console.log("A");
+
         let sl = app.sleep(10); //sleep用法
         for (let x = 0; x < 10; x++) {
             var i = 100;
@@ -24,16 +31,48 @@ exports.getForChat = function(str, conn) {
                     sl = sl.then(() => {
                         //sleep的使用方法
                         i++;
-                        conn.send(
-                            //发送命令
-                            app.getByComm(
-                                //获取应发送的json
-                                "setblock " + x + " " + y + " " + z + " stone",
-                                "00000001-0000-0000-0000-000000000" + i
-                            )
+                        app.fast_send(
+                            //获取应发送的json
+                            "setblock " + x + " " + y + " " + z + " stone",
+                            conn
                         );
                         return app.sleep(10);
                     });
+                }
+            }
+        }
+    } else {
+        if (b) {
+            console.log("b");
+
+            str = str.split(" ");
+            app.fast_send("say " + JSON.stringify(str), conn);
+            let sl = app.sleep(10);
+            let number =
+                (str[4] - str[1]) * (str[5] - str[2]) * (str[6] - str[3]);
+            let i = 0;
+            for (let x = str[1]; x < str[4]; x++) {
+                for (let y = str[2]; y < str[5]; y++) {
+                    for (let z = str[3]; z < str[6]; z++) {
+                        sl = sl.then(() => {
+                            i++;
+                            app.fast_send(
+                                "setblock " + x + " " + y + " " + z + " stone",
+                                conn
+                            );
+                            app.fast_send(
+                                "title " +
+                                    name +
+                                    " actionbar 正在填充...[" +
+                                    i +
+                                    "/" +
+                                    number +
+                                    "]",
+                                conn
+                            );
+                            return app.sleep(10);
+                        });
+                    }
                 }
             }
         }
