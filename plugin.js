@@ -48,7 +48,7 @@ exports.getTheResult = function(str, conn) {
         //callback("say hello", "");
     }
     if (global.uuid != undefined) {
-        if (JSON.parse(str)["header"]["requestId"]) {
+        if (JSON.parse(str)["header"]["requestId"] == global.uuid) {
             global.callback(str);
         }
     }
