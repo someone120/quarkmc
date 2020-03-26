@@ -1,5 +1,4 @@
-<img src="img/logo.png" style="text-align:center;">  
-> 夸克是宇宙组成的最小单位
+<img src="img/logo.png" style="text-align:center;">
 
 # Quarkmc
 
