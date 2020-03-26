@@ -71,9 +71,15 @@ exports.fast_send = fast_send;
 exports.say = function(str, conn) {
     fast_send("say " + str, conn);
 };
-exports.setblock = function(x, y, z, block, data = 0) {
+exports.setblock = function(x, y, z, block, data = 0, conn) {
     fast_send(
         "setblock " + x + " " + y + " " + z + " " + block + " " + data,
+        conn
+    );
+};
+exports.progressBar = function(schedule, all, name, conn) {
+    fast_send(
+        "title " + name + " actionbar 执行中...[" + schedule + "/" + all + "]",
         conn
     );
 };
