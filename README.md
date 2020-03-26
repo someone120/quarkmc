@@ -59,8 +59,9 @@ node plugin.js install 插件的位置
 #### getForComm
 
 会在命令被调用的时候调用。  
-给定的变量：调用时的文本,执行者的名称，conn 对象。  
-以下是你在`sys/app.js`里可使用的函数。
+给定的变量：调用时的文本,执行者的名称，conn 对象。
+
+**以下是你在`sys/app.js`里可使用的函数。**
 
 #### send
 
