@@ -52,6 +52,15 @@ function send(comm, conn, callback) {
     global.callback = callback;
     global.uuid = uuid;
 }
+function send_more(conn, ...comm) {
+    let sleep = sleep(10);
+    comm.forEach(str => {
+        sleep = sleep.then(() => {
+            fast_send(str, conn);
+            return this.sleep(10);
+        });
+    });
+}
 exports.getByComm = getByComm;
 exports.getBysubscribe = getBysubscribe;
 exports.getByunsubscribe = getByunsubscribe;
