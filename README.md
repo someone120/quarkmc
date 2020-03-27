@@ -1,4 +1,6 @@
-<img src="img/logo.png" style="text-align:center;">
+<div align="center">
+  <img src="img/logo.png" style="text-align:center;">
+</div>
 
 # Quarkmc
 
@@ -15,7 +17,7 @@ Quarkmc 是一个供我的世界基岩版使用的一个 websocker 服务器，�
 ## 安装
 
 ```bash
-$ git clone https://github.com/someone120/quark
+git clone https://github.com/someone120/quark
 $ npm install
 ```
 
@@ -94,6 +96,6 @@ node plugin.js install 插件的位置
 显示进度条。  
 需要的变量：当前执行的次数，总共执行的次数，执行者名称，conn 对象
 
-# 需要帮助？
+# 需要帮助
 
 ![qq群：1092261195](img/groupQRcode.png)
