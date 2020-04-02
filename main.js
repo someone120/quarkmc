@@ -7,7 +7,7 @@
 var ws = require("nodejs-websocket");
 var plugin = require("./plugin");
 var app = require("./sys/app.js");
-var http = require("http");
+var request = require("request");
 var server = ws
     .createServer(function(conn) {
         conn.on("text", function(str) {
@@ -49,25 +49,24 @@ function getIPAddress() {
 
 function checkForUpdates() {
     console.log("[Server info] 正在检测更新...");
-    try {
-        http.request("http://quarkmc.tk/ver.json", (error, response, body) => {
-            if (!error && response.statusCode == 200) {
-                arr = JSON.parse(body);
-                arr = arr[0];
-                if (arr["verCode"] > 1) {
-                    console.log(
-                        "[Server info] 检测到新版本！\n" +
-                            "[Server info] 版本号：" +
-                            arr["ver"] +
-                            "\n[Server info] 更新内容：" +
-                            arr["new"]
-                    );
-                } else {
-                    console.log("[Server info] 您已处于最新版本");
-                }
+
+    request("http://quarkmc.tk/ver.json", (error, response, body) => {
+        if (!error && response.statusCode == 200) {
+            arr = JSON.parse(body);
+            arr = arr[0];
+            if (arr["verCode"] > 1) {
+                console.log(
+                    "[Server info] 检测到新版本！\n" +
+                        "[Server info] 版本号：" +
+                        arr["ver"] +
+                        "\n[Server info] 更新内容：" +
+                        arr["new"]
+                );
+            } else {
+                console.log("[Server info] 您已处于最新版本");
             }
-        });
-    } catch (e) {}
+        }
+    });
 }
 var ip = getIPAddress();
 console.log("[Server info] 在mc里执行/connect " + ip + ":1234");
